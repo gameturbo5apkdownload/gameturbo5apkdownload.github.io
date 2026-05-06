@@ -44,15 +44,43 @@ document.addEventListener('DOMContentLoaded', () => {
     setActiveNav();
 
     // =================== SMOOTH SCROLL ===================
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    document.querySelectorAll('a[href]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                e.preventDefault();
-                const headerH = header ? header.offsetHeight : 76;
-                const top = target.getBoundingClientRect().top + window.scrollY - headerH;
-                window.scrollTo({ top, behavior: 'smooth' });
+            const rawHref = this.getAttribute('href');
+            if (!rawHref || !rawHref.includes('#')) return;
+
+            // Handle both plain hashes ("#faq") and same-page hash URLs
+            // ("index.html#faq" or "file:///.../index.html#faq") to avoid
+            // file:// frame navigation warnings in local preview.
+            let hash = '';
+            let isSamePageHash = false;
+
+            if (rawHref.startsWith('#')) {
+                hash = rawHref;
+                isSamePageHash = true;
+            } else {
+                try {
+                    const url = new URL(rawHref, window.location.href);
+                    const currentNoHash = `${window.location.origin}${window.location.pathname}`;
+                    const targetNoHash = `${url.origin}${url.pathname}`;
+                    if (url.hash && targetNoHash === currentNoHash) {
+                        hash = url.hash;
+                        isSamePageHash = true;
+                    }
+                } catch (_) {
+                    // Ignore malformed URLs and keep default navigation.
+                }
             }
+
+            if (!isSamePageHash || !hash) return;
+
+            const target = document.querySelector(hash);
+            if (!target) return;
+
+            e.preventDefault();
+            const headerH = header ? header.offsetHeight : 76;
+            const top = target.getBoundingClientRect().top + window.scrollY - headerH;
+            window.scrollTo({ top, behavior: 'smooth' });
         });
     });
 
