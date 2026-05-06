@@ -2098,6 +2098,8 @@ footer {
     line-height: 1;
     transition: color var(--transition-speed) ease;
     z-index: 1;
+    background: transparent;
+    border: none;
 }
 
 .close-modal:hover { color: var(--primary-color); }

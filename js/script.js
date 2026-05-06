@@ -85,6 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (mobileMenuToggle && mainNav) {
         mobileMenuToggle.addEventListener('click', () => {
             const open = mainNav.classList.toggle('mobile-nav-open');
+            mobileMenuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
             const icon = mobileMenuToggle.querySelector('i');
             if (icon) {
                 icon.className = open ? 'fas fa-times' : 'fas fa-bars';
@@ -95,6 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
         mainNav.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 mainNav.classList.remove('mobile-nav-open');
+                mobileMenuToggle.setAttribute('aria-expanded', 'false');
                 const icon = mobileMenuToggle.querySelector('i');
                 if (icon) icon.className = 'fas fa-bars';
             });
@@ -137,15 +139,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // =================== GAMES CAROUSEL ===================
     const gamesData = [
-        { name: 'PUBG Mobile',          genre: 'Battle Royale',   emoji: '🔫', color: '#c0392b', image: 'images/games/PUBG Mobile.png' },
-        { name: 'COD Mobile',           genre: 'FPS Shooter',     emoji: '💥', color: '#2c3e50', image: 'images/games/COD Mobile.jpg' },
+        { name: 'PUBG Mobile',          genre: 'Battle Royale',   emoji: '🔫', color: '#c0392b', image: 'images/games/pubg-mobile.png' },
+        { name: 'COD Mobile',           genre: 'FPS Shooter',     emoji: '💥', color: '#2c3e50', image: 'images/games/cod-mobile.jpg' },
         { name: 'Free Fire',            genre: 'Battle Royale',   emoji: '🔥', color: '#e67e22', image: 'images/games/free-fire.png' },
-        { name: 'Genshin Impact',       genre: 'Open World RPG',  emoji: '⚔️', color: '#2980b9', image: 'images/games/Genshin Impact.png' },
-        { name: 'Mobile Legends',       genre: 'MOBA',            emoji: '🏆', color: '#8e44ad', image: 'images/games/Mobile Legends.jpg' },
-        { name: 'Honkai: Star Rail',    genre: 'Turn-based RPG',  emoji: '🌟', color: '#16a085', image: 'images/games/Honkai Star Rail.jpg' },
-        { name: 'Clash of Clans',       genre: 'Strategy',        emoji: '⚡', color: '#f39c12', image: 'images/games/Clash of Clans.jpg' },
-        { name: 'Arena of Valor',       genre: 'MOBA',            emoji: '🗡️', color: '#d35400', image: 'images/games/Arena of Valor.png' },
-        { name: 'Minecraft',            genre: 'Sandbox',         emoji: '⛏️', color: '#27ae60', image: 'images/games/Minecraft.png' },
+        { name: 'Genshin Impact',       genre: 'Open World RPG',  emoji: '⚔️', color: '#2980b9', image: 'images/games/genshin-impact.png' },
+        { name: 'Mobile Legends',       genre: 'MOBA',            emoji: '🏆', color: '#8e44ad', image: 'images/games/mobile-legends.jpg' },
+        { name: 'Honkai: Star Rail',    genre: 'Turn-based RPG',  emoji: '🌟', color: '#16a085', image: 'images/games/honkai-star-rail.jpg' },
+        { name: 'Clash of Clans',       genre: 'Strategy',        emoji: '⚡', color: '#f39c12', image: 'images/games/clash-of-clans.jpg' },
+        { name: 'Arena of Valor',       genre: 'MOBA',            emoji: '🗡️', color: '#d35400', image: 'images/games/arena-of-valor.png' },
+        { name: 'Minecraft',            genre: 'Sandbox',         emoji: '⛏️', color: '#27ae60', image: 'images/games/minecraft.png' },
     ];
 
     const carouselContainer = document.getElementById('gamesCarousel');
